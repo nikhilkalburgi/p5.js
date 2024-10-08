@@ -953,15 +953,15 @@ p5.prototype.hue = function(c) {
  * values. 0 is equal to the first color, 0.1 is very near the first color,
  * 0.5 is halfway between the two colors, and so on. Negative numbers are set
  * to 0. Numbers greater than 1 are set to 1. This differs from the behavior of
- * <a href="#/lerp">lerp</a>. It's necessary because numbers outside of the
+ * <a href="#/p5/lerp">lerp</a>. It's necessary because numbers outside of the
  * interval [0, 1] will produce strange and unexpected colors.
  *
  * The way that colors are interpolated depends on the current
- * <a href="#/colorMode">colorMode()</a>.
+ * <a href="#/p5/colorMode">colorMode()</a>.
  *
  * @method lerpColor
- * @param  {p5.Color} c1  interpolate from this color.
- * @param  {p5.Color} c2  interpolate to this color.
+ * @param  {p5.Color} c1  interpolate from this color (any value created by the color() function).
+ * @param  {p5.Color} c2  interpolate to this color (any value created by the color() function).
  * @param  {Number}   amt number between 0 and 1.
  * @return {p5.Color}     interpolated color.
  *
@@ -1007,6 +1007,14 @@ p5.prototype.hue = function(c) {
  */
 p5.prototype.lerpColor = function(c1, c2, amt) {
   p5._validateParameters('lerpColor', arguments);
+
+  if (!(c1 instanceof p5.Color)) {
+    c1 = color(c1);
+  }
+  if (!(c2 instanceof p5.Color)) {
+    c2 = color(c2);
+  }
+
   const mode = this._colorMode;
   const maxes = this._colorMaxes;
   let l0, l1, l2, l3;
